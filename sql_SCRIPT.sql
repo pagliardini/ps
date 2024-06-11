@@ -18,7 +18,7 @@ USE `petShop` ;
 -- Table `petShop`.`Categoria`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `petShop`.`Categoria` (
-  `ID_Categoria` INT NOT NULL,
+  `ID_Categoria` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(45) NOT NULL,
   `Descripcion` VARCHAR(45) NULL,
   PRIMARY KEY (`ID_Categoria`))
@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 -- Table `petShop`.`Clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `petShop`.`Clientes` (
-  `ID_Cliente` INT NOT NULL,
+  `ID_Cliente` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(45) NOT NULL,
   `Apellido` VARCHAR(45) NOT NULL,
   `Telefono` VARCHAR(30) NOT NULL,
@@ -71,7 +71,7 @@ ENGINE = InnoDB;
 -- Table `petShop`.`Sucursales`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `petShop`.`Sucursales` (
-  `ID_Sucursal` INT NOT NULL,
+  `ID_Sucursal` INT NOT NULL AUTO_INCREMENT,
   `Ciudad` VARCHAR(45) NOT NULL,
   `Direccion` VARCHAR(45) NOT NULL,
   `Telefono` VARCHAR(30) NOT NULL,
@@ -84,7 +84,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `petShop`.`Ventas` (
   `ID_Venta` INT NOT NULL,
-  `Fecha` DATETIME NOT NULL,
+  `Fecha` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Forma_Pago` VARCHAR(45) NULL,
   `Descuento` DECIMAL(5,2) NULL,
   `Total_Venta` DECIMAL(10,2) NOT NULL,

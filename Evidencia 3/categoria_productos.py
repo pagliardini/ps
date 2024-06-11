@@ -2,10 +2,10 @@ from db import execute_query, fetch_query
 
 def gestionar_categorias():
     while True:
-        print("Gestionando Categorías de Productos")
-        print("1. Mostrar Categorías")
-        print("2. Añadir Categoría")
-        print("3. Eliminar Categoría")
+        print("Gestionando categorías de productos")
+        print("1. Mostrar categorías")
+        print("2. Añadir categoría")
+        print("3. Eliminar categoría")
         print("4. Volver al menú principal")
         opcion = input("Ingrese una opción: ")
 
@@ -29,8 +29,8 @@ def mostrar_categorias():
 
 def añadir_categoria():
     nombre = input("Ingrese el nombre de la categoría: ")
-    descripcion = input("Ingrese la descripción de la categoría: ")
-
+    descripcion = input("Ingrese la descripción de la categoría (opcional): ")
+    
     query = """
     INSERT INTO Categoria (Nombre, Descripcion)
     VALUES (%s, %s)
@@ -40,12 +40,13 @@ def añadir_categoria():
     try:
         execute_query(query, params)
         print("Categoría añadida correctamente.")
-    except mysql.connector.Error as err:
+    except Exception as err:
         print(f"Error al añadir categoría: {err}")
 
 def eliminar_categoria():
     id_categoria = input("Ingrese el ID de la categoría a eliminar: ")
     
+    # Verificar si la categoría existe
     query_check = "SELECT COUNT(*) FROM Categoria WHERE ID_Categoria = %s"
     params_check = (id_categoria,)
     categoria_existe = fetch_query(query_check, params_check)[0][0]
@@ -53,12 +54,16 @@ def eliminar_categoria():
     if categoria_existe == 0:
         print("Error: La categoría con el ID especificado no existe.")
         return
-
+    
     query = "DELETE FROM Categoria WHERE ID_Categoria = %s"
     params = (id_categoria,)
     
     try:
         execute_query(query, params)
         print("Categoría eliminada correctamente.")
-    except mysql.connector.Error as err:
+    except Exception as err:
         print(f"Error al eliminar categoría: {err}")
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    gestionar_categorias()

@@ -30,21 +30,33 @@ def ver_sucursales():
         print(row)
 
 def agregar_sucursal():
-    id_sucursal = input("Ingrese el ID de la Sucursal: ")
     ciudad = input("Ingrese la Ciudad: ")
     direccion = input("Ingrese la Dirección: ")
     telefono = input("Ingrese el Teléfono: ")
     email = input("Ingrese el Email: ")
 
     query = """
-    INSERT INTO Sucursales (ID_Sucursal, Ciudad, Direccion, Telefono, Email)
-    VALUES (%s, %s, %s, %s, %s)
+    INSERT INTO Sucursales (Ciudad, Direccion, Telefono, Email)
+    VALUES (%s, %s, %s, %s)
     """
-    params = (id_sucursal, ciudad, direccion, telefono, email)
+    params = (ciudad, direccion, telefono, email)
     execute_query(query, params)
+    print("Sucursal agregada correctamente.")
 
 def actualizar_sucursal():
-    id_sucursal = input("Ingrese el ID de la Sucursal a actualizar: ")
+    sucursales = fetch_query("SELECT ID_Sucursal, Ciudad, Direccion FROM Sucursales")
+    
+    print("Seleccione la sucursal que desea actualizar:")
+    for idx, sucursal in enumerate(sucursales):
+        print(f"{idx + 1}. ID: {sucursal[0]}, Ciudad: {sucursal[1]}, Dirección: {sucursal[2]}")
+    
+    seleccion = int(input("Ingrese el número de la sucursal a actualizar: ")) - 1
+    
+    if seleccion < 0 or seleccion >= len(sucursales):
+        print("Selección inválida.")
+        return
+
+    id_sucursal = sucursales[seleccion][0]
     ciudad = input("Ingrese la nueva Ciudad: ")
     direccion = input("Ingrese la nueva Dirección: ")
     telefono = input("Ingrese el nuevo Teléfono: ")
@@ -57,10 +69,28 @@ def actualizar_sucursal():
     """
     params = (ciudad, direccion, telefono, email, id_sucursal)
     execute_query(query, params)
+    print("Sucursal actualizada correctamente.")
 
 def eliminar_sucursal():
-    id_sucursal = input("Ingrese el ID de la Sucursal a eliminar: ")
+    sucursales = fetch_query("SELECT ID_Sucursal, Ciudad, Direccion FROM Sucursales")
+    
+    print("Seleccione la sucursal que desea eliminar:")
+    for idx, sucursal in enumerate(sucursales):
+        print(f"{idx + 1}. ID: {sucursal[0]}, Ciudad: {sucursal[1]}, Dirección: {sucursal[2]}")
+    
+    seleccion = int(input("Ingrese el número de la sucursal a eliminar: ")) - 1
+    
+    if seleccion < 0 or seleccion >= len(sucursales):
+        print("Selección inválida.")
+        return
 
+    id_sucursal = sucursales[seleccion][0]
+    
     query = "DELETE FROM Sucursales WHERE ID_Sucursal = %s"
     params = (id_sucursal,)
     execute_query(query, params)
+    print("Sucursal eliminada correctamente.")
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    gestionar_sucursales()

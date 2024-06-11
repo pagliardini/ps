@@ -2,8 +2,10 @@ from sucursales import gestionar_sucursales
 from productos import gestionar_productos
 from ventas import gestionar_ventas
 from proveedores import gestionar_proveedores
-from detalle_ventas import gestionar_detalle_ventas
+from detalle_ventas import detalle_ventas
 from categoria_productos import gestionar_categorias
+from clientes import gestionar_clientes
+
 
 def menu_principal():
     while True:
@@ -12,9 +14,10 @@ def menu_principal():
         print("2. Gestionar Productos")
         print("3. Gestionar Ventas")
         print("4. Gestionar Proveedores")
-        print("5. Gestionar Detalle de Ventas")
-        print("6. Gestionar Categorías de Productos")
-        print("7. Salir")
+        print("5. Gestionar Clientes")
+        print("6. Gestionar Detalle de Ventas")
+        print("7. Gestionar Categorías de Productos")
+        print("8. Salir")
         opcion = input("Ingrese una opción: ")
 
         if opcion == "1":
@@ -26,10 +29,12 @@ def menu_principal():
         elif opcion == "4":
             gestionar_proveedores()
         elif opcion == "5":
-            gestionar_detalle_ventas()
+            gestionar_clientes()
         elif opcion == "6":
-            gestionar_categorias()
+            detalle_ventas()
         elif opcion == "7":
+            gestionar_categorias()            
+        elif opcion == "8":
             print("¡Hasta luego!")
             break
         else:
